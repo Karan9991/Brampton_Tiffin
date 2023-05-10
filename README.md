@@ -1,5 +1,4 @@
-# Brampton Tiffins 
-### (Flutter Android and iOS app with Laravel backend)
+# Brampton Tiffins ### (Flutter Android and iOS app with Laravel backend)
 
 Brampton Tiffin is the go-to app for residents of Brampton, Canada, seeking delicious and convenient meals. Browse a wide variety of tiffins posted by local sellers and connect directly with them to satisfy your hunger cravings.
 
