@@ -11,6 +11,8 @@ import 'package:tiffin/widgets/tiffinwidgets.dart';
 import 'package:tiffin/addkitchen/add.dart';
 import 'package:tiffin/util/shared_pref.dart';
 import 'package:tiffin/chat/chathome.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -115,6 +117,51 @@ class _MyHomePageState extends State<MyHomePage> {
                   // Perform logout action
                 },
               ),
+              ListTile(
+                leading: Icon(Icons.delete, color: Colors.red),
+                title: Text('Delete Account'),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Delete Account'),
+                        content: Text(
+                            'Are you sure you want to delete your account?'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          TextButton(
+                            child: Text('Delete'),
+                            onPressed: () {
+                              // Perform delete account action here
+                              //  deleteAccount();
+                              deleteAccountLogout();
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+
+              // ListTile(
+
+              //   leading:
+              //       Icon(Icons.logout, color: Theme.of(context).primaryColor),
+              //   title: Text('Logout'),
+              //   onTap: () {
+              //     logout();
+              //     Navigator.pop(context);
+              //     // Perform logout action
+              //   },
+              // ),
             ],
           ),
         ),
@@ -251,6 +298,76 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+//   Future<void> deleteAccount() async {
+//   try {
+//     final dio = Dio();
+//        final Map<String, dynamic> user = await getUser();
+//     final userId = user['id'];
+
+//     // Make the DELETE request to the API endpoint
+//     await dio.delete('http://bramptontiffin.x10.mx/api/users/$userId');
+//     await dio.delete('http://bramptontiffin.x10.mx/api/kitchens/$userId');
+//     await dio.delete('http://bramptontiffin.x10.mx/api/tiffins/$userId');
+
+//     // Handle successful deletion
+//     // TODO: Implement your desired logic here
+//     print('Account deleted successfully');
+//   } catch (e) {
+//     // Handle error
+//     // TODO: Implement your error handling logic here
+//     print('Failed to delete account: $e');
+//   }
+// }
+  Future<void> deleteAccountLogout() async {
+    try {
+      // Perform account deletion logic
+
+      await deleteAccount(); // Call the server-side deleteAccount function
+
+      // Perform other necessary cleanup or actions
+      await SharedPrefHelper.init();
+      await SharedPrefHelper.clear();
+
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      //await logout(); // Call the logout function separately
+    } catch (e) {
+      print('Failed to delete account: $e');
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      final dio = Dio();
+      final Map<String, dynamic> user = await getUser();
+      final userId = user['id'];
+      // final user = await getUser();
+      // final userId = user['id'];
+      final userType = user['userType'];
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+
+      // Make the DELETE request to the API endpoint
+      await dio.delete('http://bramptontiffin.x10.mx/api/users/$userId');
+
+      // Check if the user type is 'seller'
+      if (userType == 'Seller') {
+        await dio.delete('http://bramptontiffin.x10.mx/api/kitchens/$userId');
+        await dio.delete('http://bramptontiffin.x10.mx/api/tiffins/$userId');
+      }
+
+      await firebaseUser!.delete();
+
+      // await logout();
+
+      // Handle successful deletion
+      // TODO: Implement your desired logic here
+      print('Account deleted successfully');
+    } catch (e) {
+      // Handle error
+      // TODO: Implement your error handling logic here
+      print('Failed to delete account: $e');
+    }
+  }
+
   Future<void> logout() async {
     final Map<String, dynamic> user = await getUser();
     final String usertoken = user['token'];
@@ -284,6 +401,7 @@ class _MyHomePageState extends State<MyHomePage> {
       'email': SharedPrefHelper.getString('email') ?? '',
       'userType': SharedPrefHelper.getString('userType') ?? '',
       'token': SharedPrefHelper.getString('token') ?? '',
+      'id': SharedPrefHelper.getInt('id') ?? 0,
     };
   }
 
