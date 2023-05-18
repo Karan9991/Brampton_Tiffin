@@ -324,9 +324,9 @@ class _SignUpState extends State<SignUp> {
                             textAlign: TextAlign.center,
                             text: TextSpan(
                               text:
-                                  'By Clicking Sign in you certify that you agree to our ',
+                                  'By Clicking Sign up you certify that you agree to our ',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.grey,
                               ),
                               children: [
                                 TextSpan(

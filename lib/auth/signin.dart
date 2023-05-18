@@ -302,7 +302,7 @@ class _SignInState extends State<SignIn> {
                               text:
                                   'By Clicking Sign in you certify that you agree to our ',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.grey,
                               ),
                               children: [
                                 TextSpan(
