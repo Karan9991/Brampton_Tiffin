@@ -27,6 +27,6 @@ class Constants {
 
   static const String logout = BASE_URL + 'logout';
   static const String getUserById = BASE_URL + 'users';
-  static const String support = BASE_URL + 'support';
+  static const String support = BASE_URL_without_API + 'support';
 
 }

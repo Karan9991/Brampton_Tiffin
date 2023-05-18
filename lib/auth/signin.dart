@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tiffin/auth/forgotpassword.dart';
 import 'package:tiffin/auth/signup.dart';
 import 'package:tiffin/home_screens/home.dart';
 import 'dart:async';
@@ -9,6 +10,9 @@ import 'package:tiffin/util/app_constants.dart';
 import 'package:tiffin/util/snackbar.dart';
 import 'package:tiffin/util/shared_pref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -22,15 +26,69 @@ class _SignInState extends State<SignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isChecked = false;
+  bool rememberMe = false;
 
   @override
   void initState() {
     super.initState();
+    getRememberMePreference();
   }
 
-  bool _rememberMe = false;
+  // bool _rememberMe = false;
   String? _email;
   String? _password;
+
+  Future<void> getRememberMePreference() async {
+    await SharedPrefHelper.init();
+    bool rememberMe = SharedPrefHelper.getBool('rememberMe') ?? false;
+    print('getRememberMePreference');
+    print(rememberMe);
+    print(SharedPrefHelper.getString('emaill'));
+    setState(() {
+      this.rememberMe = rememberMe;
+      if (rememberMe) {
+        // Retrieve saved email and password
+        _emailController.text = SharedPrefHelper.getString('emaill') ?? '';
+        _passwordController.text =
+            SharedPrefHelper.getString('passwordd') ?? '';
+      }
+    });
+  }
+
+  Future<void> setRememberMePreference(bool value) async {
+    await SharedPrefHelper.init();
+    rememberMe = value;
+    await SharedPrefHelper.setBool('rememberMe', value);
+    print('setRememberMePreference');
+    print(rememberMe);
+    print(SharedPrefHelper.getString('emaill'));
+    if (!value) {
+      // Clear saved email and password
+      await SharedPrefHelper.remove('emaill');
+      await SharedPrefHelper.remove('passwordd');
+    }
+  }
+
+  Future<void> saveCredentials() async {
+    await SharedPrefHelper.init();
+    await SharedPrefHelper.setString('emaill', _emailController.text);
+    await SharedPrefHelper.setString('passwordd', _passwordController.text);
+  }
+
+  void handleSignIn(String email, String password) {
+    // Perform sign-in logic here
+
+    if (rememberMe) {
+      saveCredentials();
+    } else {
+      // Clear saved email and password
+      setRememberMePreference(false);
+    }
+
+    loginWithEmail(_emailController.text, _passwordController.text);
+
+    // Navigate to the next screen or perform any other actions
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +134,7 @@ class _SignInState extends State<SignIn> {
                 ),
                 Container(
                     margin: EdgeInsets.only(top: 40, left: 10, right: 10),
-                    height: 400,
+                    height: 450,
                     decoration: BoxDecoration(
                       color: Colors.white70,
                       borderRadius: BorderRadius.circular(15),
@@ -193,11 +251,12 @@ class _SignInState extends State<SignIn> {
                                           color: Theme.of(context).primaryColor,
                                         ),
                                       ),
-                                      value: _rememberMe,
+                                      value: rememberMe,
                                       onChanged: (value) {
                                         setState(() {
-                                          _rememberMe = value!;
+                                          rememberMe = value!;
                                         });
+                                        setRememberMePreference(value!);
                                       },
                                     ),
                                   ),
@@ -209,30 +268,6 @@ class _SignInState extends State<SignIn> {
                                   ),
                                 ]),
                               ),
-
-                              // Container(
-                              //   height: 20,
-                              //   child: Row(children: [
-                              //     Checkbox(
-                              //       shape: RoundedRectangleBorder(
-                              //           side: BorderSide(
-                              //               color: Theme.of(context)
-                              //                   .primaryColor)),
-                              //       value: _rememberMe,
-                              //       onChanged: (value) {
-                              //         setState(() {
-                              //           _rememberMe = value!;
-                              //         });
-                              //       },
-                              //       checkColor: Colors
-                              //           .green, // set the color of the square box
-                              //     ),
-                              //     Text('Remember Me',
-                              //         style: TextStyle(
-                              //           color: Theme.of(context).primaryColor,
-                              //         )),
-                              //   ]),
-                              // ),
                               SizedBox(
                                 height: 30,
                                 width: 20,
@@ -240,7 +275,15 @@ class _SignInState extends State<SignIn> {
                               Container(
                                 alignment: Alignment.center,
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ForgotPasswordScreen(),
+                                      ),
+                                    );
+                                  },
                                   child: Text(
                                     'Forgot Password?',
                                     style: TextStyle(
@@ -249,6 +292,46 @@ class _SignInState extends State<SignIn> {
                                 ),
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text:
+                                  'By Clicking Sign in you certify that you agree to our ',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Privacy policy',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // Navigate to privacy policy URL
+                                      //  launchPrivacyPolicyURL();
+                                      _privacyUrl();
+                                    },
+                                ),
+                                TextSpan(text: ' and '),
+                                TextSpan(
+                                  text: 'Terms and conditions',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // Navigate to terms and conditions URL
+                                      _termsUrl();
+                                      // launchTermsAndConditionsURL();
+                                    },
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 20,
@@ -260,7 +343,9 @@ class _SignInState extends State<SignIn> {
                               }
 
                               _globalKey.currentState!.save();
-                              loginWithEmail(_emailController.text,
+                              // loginWithEmail(_emailController.text,
+                              //     _passwordController.text);
+                              handleSignIn(_emailController.text,
                                   _passwordController.text);
                             },
                             child: Text(
@@ -317,6 +402,24 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+  Future<void> _termsUrl() async {
+    final Uri _privUrl = Uri.parse(
+        'https://doc-hosting.flycricket.io/brampton-tiffin-terms-conditions/83ec4a56-84f6-445a-a208-6a7bc805245e/terms');
+
+    if (!await launchUrl(_privUrl)) {
+      throw Exception('Could not launch $_privUrl');
+    }
+  }
+
+  Future<void> _privacyUrl() async {
+    final Uri _privUrl = Uri.parse(
+        'https://doc-hosting.flycricket.io/brampton-tiffin-privacy-policy/a331e2a2-ba9e-4714-a359-9fb4f8513c9a/privacy');
+
+    if (!await launchUrl(_privUrl)) {
+      throw Exception('Could not launch $_privUrl');
+    }
+  }
+
   static Future<void> saveUser(
       Map<String, dynamic> userMap, String token) async {
     await SharedPrefHelper.init();
@@ -362,6 +465,7 @@ class _SignInState extends State<SignIn> {
         //   context,
         //   MaterialPageRoute(builder: (context) => MyHomePage()),
         // );
+        //  handleSignIn();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => MyHomePage()),

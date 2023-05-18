@@ -7,6 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:tiffin/util/app_constants.dart';
 import 'package:tiffin/util/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUp extends StatefulWidget {
   final Function(String)? onSelected;
@@ -90,7 +92,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Container(
                     margin: EdgeInsets.only(top: 20, left: 10, right: 10),
-                    height: 520,
+                    height: 580,
                     decoration: BoxDecoration(
                       color: Colors.white70,
                       borderRadius: BorderRadius.circular(15),
@@ -318,6 +320,46 @@ class _SignUpState extends State<SignUp> {
                           SizedBox(
                             height: 10,
                           ),
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text:
+                                  'By Clicking Sign in you certify that you agree to our ',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Privacy policy',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // Navigate to privacy policy URL
+                                      //  launchPrivacyPolicyURL();
+                                      _privacyUrl();
+                                    },
+                                ),
+                                TextSpan(text: ' and '),
+                                TextSpan(
+                                  text: 'Terms and conditions',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      // Navigate to terms and conditions URL
+                                      _termsUrl();
+                                      // launchTermsAndConditionsURL();
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           ElevatedButton(
                             onPressed: () {
                               if (_selectedType == '') {
@@ -503,6 +545,24 @@ class _SignUpState extends State<SignUp> {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> _termsUrl() async {
+    final Uri _privUrl = Uri.parse(
+        'https://doc-hosting.flycricket.io/brampton-tiffin-terms-conditions/83ec4a56-84f6-445a-a208-6a7bc805245e/terms');
+
+    if (!await launchUrl(_privUrl)) {
+      throw Exception('Could not launch $_privUrl');
+    }
+  }
+
+  Future<void> _privacyUrl() async {
+    final Uri _privUrl = Uri.parse(
+        'https://doc-hosting.flycricket.io/brampton-tiffin-privacy-policy/a331e2a2-ba9e-4714-a359-9fb4f8513c9a/privacy');
+
+    if (!await launchUrl(_privUrl)) {
+      throw Exception('Could not launch $_privUrl');
     }
   }
 }

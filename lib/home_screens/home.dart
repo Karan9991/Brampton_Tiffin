@@ -17,6 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:tiffin/util/app_constants.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String userType = '';
   String email = '';
   String _searchQuery = '';
-  final Uri _supportUrl = Uri.parse('https://bramptontiffin.x10.mx/support');
+  final Uri _supportUrl = Uri.parse(Constants.support);
 
   Future<void> _launchUrl() async {
     if (!await launchUrl(_supportUrl)) {
@@ -131,6 +132,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {
                   // Navigate to the support web URL
                   _launchUrl();
+                },
+              ),
+
+              ListTile(
+                leading:
+                    Icon(Icons.policy, color: Theme.of(context).primaryColor),
+                title: Text('Privacy Policy'),
+                onTap: () {
+                  _privacyUrl();
+                  // Navigate to privacy policy screen or launch privacy policy URL
+                  // Implement the desired navigation or launching logic here
+                  // For example:
+                },
+              ),
+              ListTile(
+                leading:
+                    Icon(Icons.article, color: Theme.of(context).primaryColor),
+                title: Text('Terms and Conditions'),
+                onTap: () {
+                  _termsUrl();
+                  // Navigate to terms and conditions screen or launch terms and conditions URL
+                  // Implement the desired navigation or launching logic here
+                  // For example:
                 },
               ),
 
@@ -427,5 +451,23 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       usertoken = user['token'];
     });
+  }
+
+  Future<void> _termsUrl() async {
+    final Uri _privUrl = Uri.parse(
+        'https://doc-hosting.flycricket.io/brampton-tiffin-terms-conditions/83ec4a56-84f6-445a-a208-6a7bc805245e/terms');
+
+    if (!await launchUrl(_privUrl)) {
+      throw Exception('Could not launch $_privUrl');
+    }
+  }
+
+  Future<void> _privacyUrl() async {
+    final Uri _privUrl = Uri.parse(
+        'https://doc-hosting.flycricket.io/brampton-tiffin-privacy-policy/a331e2a2-ba9e-4714-a359-9fb4f8513c9a/privacy');
+
+    if (!await launchUrl(_privUrl)) {
+      throw Exception('Could not launch $_privUrl');
+    }
   }
 }

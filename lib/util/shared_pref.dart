@@ -36,6 +36,7 @@ class SharedPrefHelper {
   static bool? getBool(String key) {
     return _prefs.getBool(key);
   }
+
 //  static bool getBool(String key, {bool defaultValue = false}) {
 //     return _prefs.getBool(key) ?? defaultValue;
 //   }
@@ -44,9 +45,28 @@ class SharedPrefHelper {
     return await _prefs.remove(key);
   }
 
- // Clear all data in shared preferences
-  static Future<bool> clear() async {
-    return await _prefs.clear();
-  }
+  // Clear all data in shared preferences
+  // static Future<bool> clear() async {
+  //   return await _prefs.clear();
+  // }
 
+  static Future<bool> clear() async {
+    final rememberMeEmail = _prefs!.getString('emaill');
+    final rememberMePassword = _prefs!.getString('passwordd');
+    final rememberMe = _prefs!.getBool('rememberMe');
+
+    await _prefs!.clear();
+
+    // Restore the email and password for the "Remember Me" functionality
+    if (rememberMeEmail != null) {
+      await _prefs!.setString('emaill', rememberMeEmail);
+    }
+    if (rememberMePassword != null) {
+      await _prefs!.setString('passwordd', rememberMePassword);
+    }
+  if (rememberMe != null) {
+      await _prefs!.setBool('rememberMe', rememberMe);
+    }
+    return true;
+  }
 }
