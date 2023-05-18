@@ -13,6 +13,7 @@ import 'package:tiffin/util/shared_pref.dart';
 import 'package:tiffin/chat/chathome.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,13 @@ class _MyHomePageState extends State<MyHomePage> {
   String userType = '';
   String email = '';
   String _searchQuery = '';
+  final Uri _supportUrl = Uri.parse('https://bramptontiffin.x10.mx/support');
+
+  Future<void> _launchUrl() async {
+    if (!await launchUrl(_supportUrl)) {
+      throw Exception('Could not launch $_supportUrl');
+    }
+  }
 
   List<Widget>? _screens;
   @override
@@ -117,6 +125,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   // Perform logout action
                 },
               ),
+              ListTile(
+                leading: Icon(Icons.support, color: Colors.blue),
+                title: Text('Support'),
+                onTap: () {
+                  // Navigate to the support web URL
+                  _launchUrl();
+                },
+              ),
+
               ListTile(
                 leading: Icon(Icons.delete, color: Colors.red),
                 title: Text('Delete Account'),

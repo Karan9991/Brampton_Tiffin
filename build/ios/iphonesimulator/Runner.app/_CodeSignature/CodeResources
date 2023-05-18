@@ -46,7 +46,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		s+5TC9VmLO1ajlv3H9GvWFiPbQU=
+		sLzVec2JccTZGbKkx6DEnxTVpnk=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		wwBW/hrxH9xIU6dU1Jo5qz1IEu4=
+		nc5IScIBELrVLdvCICk+Z94/xFc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		EuqjbeK0w76C0eqGCkJrr4c+Ryc=
+		q4sO/WxLVTRQItFta87gVEaom04=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/font/Roboto-Black.ttf</key>
 		<data>
@@ -510,7 +510,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		i5ZlpDprCIb70O0KHNXEDjaXlkM=
+		9T8Ox+04xSpeUyMYoFzvFe0bwd8=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -732,13 +732,25 @@
 		<data>
 		ASjpsA0JKSicMprBA2h2SdFZS2Q=
 		</data>
+		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
+		<data>
+		QrMBYGphd9BbxGn9JS/WwpLoRqY=
+		</data>
+		<key>Frameworks/url_launcher_ios.framework/_CodeSignature/CodeResources</key>
+		<data>
+		YmdRgRqTDeqS4r2fWMN3xVzTH9A=
+		</data>
+		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios</key>
+		<data>
+		LVXomBIJ3ntCMwI6AwNg0CN2Cbg=
+		</data>
 		<key>GoogleService-Info.plist</key>
 		<data>
 		w+dPNAXiXkgxiX8aaWmiI1cn+Ss=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		A8rlsjvcr8atVDTeLw5SIMr16Lc=
+		dWAyDqkEH1ow7FOKJ+8kj3W9cHI=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -821,7 +833,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			49C73AkZqB8OnXy1Qu4SxZkzHzVVO3RezjQ7ZrfQDfA=
+			vLXYteYn0nhtQuYK+yfBrImzd5HrXQzaLGhn6dek9wI=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -835,7 +847,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fSPpvTd+mQPy8l192RmtRaM2dLg6uDMuQIAYd0XlMeU=
+			uEd2gYsenGjU3Yvu6OVVj9aNBqmSgYAwXMhi23gnd6o=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
@@ -856,7 +868,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			XEXKvSckT/v6kPigUe61CD3qSb1fW330jl9OsAst7TQ=
+			Exv67ds9OLACW6LP5ilLQ0g4SxHDSKC8zBocSULfydc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/font/Roboto-Black.ttf</key>
@@ -1633,7 +1645,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/typQaoAVXvEsPsRi1pje92YAtX2ZNBVNRSWcYQaG5M=
+			Rbob2Eyf7BVMkd5sAcDFO8qvX8uqeDPjGE6yAJs4nNs=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -2019,6 +2031,27 @@
 			<key>hash2</key>
 			<data>
 			vyXQlZYi/ZORR4sTHDiRV/Hpv2Wbd4sycYSTmI/1L/I=
+			</data>
+		</dict>
+		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Bq+tMC+HEfdR7vnOXp6u1xUHo87sJfhF3Vp8QAGf2OA=
+			</data>
+		</dict>
+		<key>Frameworks/url_launcher_ios.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			1zWKXl0HZPHMA+On7POzNcnuGTnTQ6CXzX5J46OeYOs=
+			</data>
+		</dict>
+		<key>Frameworks/url_launcher_ios.framework/url_launcher_ios</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			klhNuGJV6FDppU8W596yGnHSfAqZ/QLTnJAxsTliSx4=
 			</data>
 		</dict>
 		<key>GoogleService-Info.plist</key>
