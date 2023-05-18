@@ -225,9 +225,9 @@
     },
     {
       "name": "google_fonts",
-      "rootUri": "file:///Users/karandeepsingh/.pub-cache/hosted/pub.dev/google_fonts-2.3.3",
+      "rootUri": "file:///Users/karandeepsingh/.pub-cache/hosted/pub.dev/google_fonts-4.0.4",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "http",
@@ -548,7 +548,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-05-10T01:28:16.596807Z",
+  "generated": "2023-05-18T00:10:37.362572Z",
   "generator": "pub",
   "generatorVersion": "2.19.2"
 }

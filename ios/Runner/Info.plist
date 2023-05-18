@@ -48,6 +48,6 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Brampton Tiffins needs permission to access your photo library.</string>
+	<string>This app requires access to your photos to allow you to upload a kitchen banner and publish tiffins. The kitchen banner will be used to create and publish tiffins. These published tiffins will be displayed as advertisements, showcasing the services and offerings of the respective kitchens. We respect your privacy and ensure that your photos are only used within the app for this specific purpose.</string>
 </dict>
 </plist>
