@@ -1,6 +1,9 @@
 # Brampton Tiffins 
 ### (Flutter Android and iOS app with Laravel backend)
 
+[![](assets/image/playstore.png)](https://play.google.com/store/apps/details?id=com.tiff.tiffinbox)
+[![](assets/image/appstore.png)](https://apps.apple.com/ca/app/brampton-tiffin/id6448964514)
+
 [View App on Play Store](https://play.google.com/store/apps/details?id=com.tiff.tiffinbox)
 
 [View App on App Store](https://apps.apple.com/ca/app/brampton-tiffin/id6448964514)
