@@ -1,14 +1,13 @@
 # Brampton Tiffins 
 ### (Flutter Android and iOS app with Laravel backend)
 
-<a href="https://specific-link.com">
-  <img src="assets/image/playstore.png" alt="I" width="150" height="60">
+<a href="https://play.google.com/store/apps/details?id=com.tiff.tiffinbox">
+  <img src="assets/image/playstore.png" alt="I" width="167" height="60">
 </a>
 
-
-[View App on Play Store](https://play.google.com/store/apps/details?id=com.tiff.tiffinbox)
-
-[View App on App Store](https://apps.apple.com/ca/app/brampton-tiffin/id6448964514)
+<a href="https://apps.apple.com/ca/app/brampton-tiffin/id6448964514">
+  <img src="assets/image/appstore.png" alt="I" width="167" height="60">
+</a>
 
 Brampton Tiffin is the go-to app for residents of Brampton, Canada, seeking delicious and convenient meals. Browse a wide variety of tiffins posted by local sellers and connect directly with them to satisfy your hunger cravings.
 
