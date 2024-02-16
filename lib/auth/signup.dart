@@ -18,7 +18,7 @@ class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
-
+                                   
 class _SignUpState extends State<SignUp> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
@@ -520,7 +520,7 @@ class _SignUpState extends State<SignUp> {
         print('The account already exists for that email.');
       }
     } catch (e) {
-      print(e.toString());
+      print('FIREBASE ERROR ${e.toString()}');
     }
   }
 

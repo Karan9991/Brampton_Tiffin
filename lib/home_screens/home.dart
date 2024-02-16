@@ -1,23 +1,22 @@
+import 'dart:convert';
+
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:tiffin/auth/signin.dart';
-import 'package:tiffin/bannerdisplay.dart';
-import 'package:tiffin/chat/chatlist.dart';
-import 'package:tiffin/home_screens/HomeAppBar.dart';
-import 'package:tiffin/util/app_constants.dart';
-import 'package:tiffin/widgets/categories.dart';
-import 'package:tiffin/widgets/banner.dart';
-import 'package:tiffin/widgets/tiffinwidgets.dart';
-import 'package:tiffin/addkitchen/add.dart';
-import 'package:tiffin/util/shared_pref.dart';
-import 'package:tiffin/chat/chathome.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:http/http.dart' as http;
+import 'package:tiffin/addkitchen/add.dart';
+import 'package:tiffin/auth/signin.dart';
+import 'package:tiffin/chat/chathome.dart';
+import 'package:tiffin/home_screens/HomeAppBar.dart';
 import 'package:tiffin/util/app_constants.dart';
+import 'package:tiffin/util/shared_pref.dart';
+import 'package:tiffin/webview.dart';
+import 'package:tiffin/widgets/banner.dart';
+import 'package:tiffin/widgets/categories.dart';
+import 'package:tiffin/widgets/tiffinwidgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -31,10 +30,21 @@ class _MyHomePageState extends State<MyHomePage> {
   String email = '';
   String _searchQuery = '';
   final Uri _supportUrl = Uri.parse(Constants.support);
+  final Uri _deleteAccountUrl = Uri.parse(Constants.deleteAccount);
+
+  InAppWebViewController? _webViewController;
 
   Future<void> _launchUrl() async {
     if (!await launchUrl(_supportUrl)) {
       throw Exception('Could not launch $_supportUrl');
+    }
+  }
+
+  Future<void> _launchDeleteAccountUrl() async {
+    if (!await launchUrl(
+      _deleteAccountUrl,
+    )) {
+      throw Exception('Could not launch $_deleteAccountUrl');
     }
   }
 
@@ -181,8 +191,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPressed: () {
                               // Perform delete account action here
                               //  deleteAccount();
-                              deleteAccountLogout();
-                              Navigator.pop(context);
+
+                              // _launchDeleteAccountUrl();
+                               deleteAccountLogout();
+                              // Navigator.pop(context);
                             },
                           ),
                         ],
@@ -370,6 +382,13 @@ class _MyHomePageState extends State<MyHomePage> {
       await SharedPrefHelper.clear();
 
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyInAppWebView()),
+      );
+      // await _launchDeleteAccountUrl();
+
       //await logout(); // Call the logout function separately
     } catch (e) {
       print('Failed to delete account: $e');
@@ -387,17 +406,16 @@ class _MyHomePageState extends State<MyHomePage> {
       final firebaseUser = FirebaseAuth.instance.currentUser;
 
       // Make the DELETE request to the API endpoint
-      await dio.delete('http://bramptontiffin.x10.mx/api/users/$userId');
+      // await dio.delete('http://bramptontiffin.x10.mx/api/users/$userId');
+      await dio.delete('http://bramptontiff.x10.mx/api/users/$userId');
 
       // Check if the user type is 'seller'
       if (userType == 'Seller') {
-        await dio.delete('http://bramptontiffin.x10.mx/api/kitchens/$userId');
-        await dio.delete('http://bramptontiffin.x10.mx/api/tiffins/$userId');
+        await dio.delete('http://bramptontiff.x10.mx/api/kitchens/$userId');
+        await dio.delete('http://bramptontiff.x10.mx/api/tiffins/$userId');
       }
 
       await firebaseUser!.delete();
-
-      // await logout();
 
       // Handle successful deletion
       // TODO: Implement your desired logic here

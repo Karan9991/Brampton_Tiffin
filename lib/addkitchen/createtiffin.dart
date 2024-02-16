@@ -1,13 +1,12 @@
 import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tiffin/util/constants.dart';
 import 'package:tiffin/util/app_constants.dart';
-import 'package:tiffin/util/snackbar.dart';
 import 'package:tiffin/util/shared_pref.dart';
-
-import 'package:dio/dio.dart';
+import 'package:tiffin/util/snackbar.dart';
 
 class CreateTiffinPage extends StatefulWidget {
   const CreateTiffinPage({Key? key}) : super(key: key);
@@ -230,32 +229,38 @@ class _CreateTiffinPageState extends State<CreateTiffinPage> {
       'price': price,
       'description': description,
       'image': await MultipartFile.fromFile(_image!.path),
-      'user_id':_currentUserId,
+      'user_id': _currentUserId,
     });
+
+    print('name $name');
+        print('price $price');
+    print('description $description');
+    print('user_id $_currentUserId');
+    print('image {$MultipartFile.fromFile(_image!.path)}');
+
 
     final dio = Dio();
     try {
       final response = await dio.post(
         Constants.posttiffin,
         data: formData,
-          options: Options(
-    followRedirects: true,
-    // other options...
-  ),
+        options: Options(
+          followRedirects: true,
+          // other options...
+        ),
       );
       if (response.statusCode == 200) {
         // Handle success response
         show(context, response.data['message'], isError: false);
         setState(() {
-              _nameController.text = '';
-        _priceController.text = '';
-        _descriptionController.text = '';
-        _image = null;
-        _nameFocus.unfocus;
-        _priceFocus.unfocus;
-        _descriptionFocus.unfocus;
+          _nameController.text = '';
+          _priceController.text = '';
+          _descriptionController.text = '';
+          _image = null;
+          _nameFocus.unfocus;
+          _priceFocus.unfocus;
+          _descriptionFocus.unfocus;
         });
-    
 
         print('Tiffin created successfully!');
       } else {

@@ -1,29 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiffin/addkitchen/add.dart';
 import 'package:tiffin/auth/signin.dart';
-import 'package:tiffin/auth/signup.dart';
-import 'package:tiffin/chat/chat.dart';
-import 'package:tiffin/chat/chatlist.dart';
-import 'package:tiffin/chat/users_or_sellers.dart';
-import 'package:tiffin/home_screens/HomeAppBar.dart';
 import 'package:tiffin/home_screens/home.dart';
 import 'package:tiffin/onbording.dart';
-import 'package:tiffin/testdesign.dart';
-import 'package:tiffin/util/shared_pref.dart';
-import 'login.dart';
-import 'signup.dart';
-import 'package:get/get.dart';
-import 'dashboard.dart';
-import 'package:tiffin/addkitchen/add.dart';
 import 'package:tiffin/util/constants.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tiffin/webview.dart';
 
 int? initScreen = 0;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-   SharedPreferences prefs = await SharedPreferences.getInstance();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
   // SharedPrefHelper.init();
@@ -46,7 +37,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         primarySwatch: lightGren,
       ),
-      // home: MyTabBarScreen(),
+      // home: MyAppWeb(),
+    //  home: MyTabBarScreen(),
+
       home: initScreen == 0 || initScreen == null ? Onbording() : MyHomePage(),
       initialRoute: '/home',
       routes: {
@@ -56,6 +49,4 @@ class MyApp extends StatelessWidget {
       },
     );
   }
-
 }
-
